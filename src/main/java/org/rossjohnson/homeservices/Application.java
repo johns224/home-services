@@ -18,45 +18,45 @@ import java.util.Map;
 @SpringBootApplication
 public class Application {
 
-	@Value("${tomcat.port:9090}")
-	private String tomcatPort;
+    @Value("${tomcat.port:9090}")
+    private String tomcatPort;
 
-	@Value("${ajp.port:9091}")
-	private String ajpPort;
+    @Value("${ajp.port:9091}")
+    private String ajpPort;
 
     @Value("${database.file:test.odb}")
     private String databaseFile;
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 
-	@Bean
-	public EmbeddedServletContainerCustomizer configureTomcat() {
-		return c -> {
-			TomcatEmbeddedServletContainerFactory tomcat = (TomcatEmbeddedServletContainerFactory) c;
-			tomcat.setPort(Integer.parseInt(tomcatPort));
+    @Bean
+    public EmbeddedServletContainerCustomizer configureTomcat() {
+        return c -> {
+            TomcatEmbeddedServletContainerFactory tomcat = (TomcatEmbeddedServletContainerFactory) c;
+            tomcat.setPort(Integer.parseInt(tomcatPort));
 
-			Connector ajpConnector = new Connector("AJP/1.3");
-			ajpConnector.setPort(Integer.parseInt(ajpPort));
-			tomcat.addAdditionalTomcatConnectors(ajpConnector);
-		};
-	}
+            Connector ajpConnector = new Connector("AJP/1.3");
+            ajpConnector.setPort(Integer.parseInt(ajpPort));
+            tomcat.addAdditionalTomcatConnectors(ajpConnector);
+        };
+    }
 
-	@Bean
-	JpaVendorAdapter JpaVendorAdapter() {
-		return new AbstractJpaVendorAdapter() {
-			@Override
-			public PersistenceProvider getPersistenceProvider() {
-				return new com.objectdb.jpa.Provider();
-			}
+    @Bean
+    JpaVendorAdapter JpaVendorAdapter() {
+        return new AbstractJpaVendorAdapter() {
+            @Override
+            public PersistenceProvider getPersistenceProvider() {
+                return new com.objectdb.jpa.Provider();
+            }
 
-			@Override
-			public Map<String,?> getJpaPropertyMap() {
-				return Collections.singletonMap(
-						"javax.persistence.jdbc.url", databaseFile);
-			}
-		};
-	}
+            @Override
+            public Map<String, ?> getJpaPropertyMap() {
+                return Collections.singletonMap(
+                        "javax.persistence.jdbc.url", databaseFile);
+            }
+        };
+    }
 
 }

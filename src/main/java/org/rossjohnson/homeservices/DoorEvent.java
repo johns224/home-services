@@ -13,10 +13,14 @@ public class DoorEvent {
     @Id
     @GeneratedValue
     private Long id;
+
     private String doorName;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss a z", timezone = "CDT")
     private Date eventDate;
+
     private Type type;
+
     private String homeName;
 
     // JPA-only

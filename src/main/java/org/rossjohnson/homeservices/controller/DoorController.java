@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.Date;
 
-/**
- * Created by ross on 6/27/2017.
- */
 @RestController
 @RequestMapping("/homes/{homeName}/doors")
 public class DoorController {
@@ -24,14 +21,14 @@ public class DoorController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{doorName}")
-    Collection<DoorEvent> getDoorEvents(@RequestParam(value = "type", defaultValue = "opened") String type,
+    Collection<DoorEvent> getDoorEvents(@RequestParam(value = "type", required = false) String type,
                                         @PathVariable String doorName,
                                         @PathVariable String homeName) {
 
-        return repository.findAll(Example.of(
-                        new DoorEvent(homeName, doorName, DoorEvent.Type.valueOf(type)))
-        );
+        DoorEvent example = ( type == null ? new DoorEvent(homeName, doorName) :
+                new DoorEvent(homeName, doorName, DoorEvent.Type.valueOf(type.toLowerCase())));
 
+        return repository.findAll(Example.of(example));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{doorName}")
@@ -39,7 +36,7 @@ public class DoorController {
                            @PathVariable String doorName,
                            @PathVariable String homeName) {
 
-        DoorEvent event = new DoorEvent(homeName, doorName, DoorEvent.Type.valueOf(type), new Date());
+        DoorEvent event = new DoorEvent(homeName, doorName, DoorEvent.Type.valueOf(type.toLowerCase()), new Date());
         repository.save(event);
 
         return event;

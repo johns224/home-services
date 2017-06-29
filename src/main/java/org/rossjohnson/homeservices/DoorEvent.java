@@ -7,9 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
 
-/**
- * Created by ross on 6/27/2017.
- */
 @Entity
 public class DoorEvent {
 
@@ -33,6 +30,12 @@ public class DoorEvent {
         this.type = type;
     }
 
+    // for Examples only
+    public DoorEvent(String homeName, String doorName) {
+        this.doorName = doorName;
+        this.homeName = homeName;
+    }
+
     public DoorEvent(String homeName, String doorName, Type type, Date eventDate) {
         this.doorName = doorName;
         this.homeName = homeName;
@@ -40,12 +43,6 @@ public class DoorEvent {
         this.eventDate = eventDate;
     }
 
-    public DoorEvent(String homeName, String doorName, Date eventDate, Type type) {
-        this.doorName = doorName;
-        this.eventDate = eventDate;
-        this.type = type;
-        this.homeName = homeName;
-    }
 
     public Long getId() {
         return id;
@@ -84,7 +81,7 @@ public class DoorEvent {
     }
 
     public enum Type {
-        opened, closed;
+        opened, closed
 
     }
 }

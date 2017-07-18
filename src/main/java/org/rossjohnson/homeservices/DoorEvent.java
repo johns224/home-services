@@ -27,6 +27,9 @@ public class DoorEvent {
     DoorEvent() {
     }
 
+    public DoorEvent(String homeName) {
+        this.homeName = homeName;
+    }
     // for Examples only
     public DoorEvent(String homeName, String doorName, Type type) {
         this.doorName = doorName;
@@ -43,6 +46,13 @@ public class DoorEvent {
     public DoorEvent(String homeName, String doorName, Type type, Date eventDate) {
         this.doorName = doorName;
         this.homeName = homeName;
+        this.type = type;
+        this.eventDate = eventDate;
+    }
+
+    public DoorEvent(String doorName, Type type, Date eventDate) {
+        this.homeName = "kerriell";
+        this.doorName = doorName;
         this.type = type;
         this.eventDate = eventDate;
     }
@@ -86,6 +96,16 @@ public class DoorEvent {
 
     public enum Type {
         opened, closed
+    }
 
+    @Override
+    public String toString() {
+        return "DoorEvent{" +
+                "id=" + id +
+                ", doorName='" + doorName + '\'' +
+                ", eventDate=" + eventDate +
+                ", type=" + type +
+                ", homeName='" + homeName + '\'' +
+                '}';
     }
 }

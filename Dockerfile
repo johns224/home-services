@@ -8,6 +8,7 @@ RUN mkdir /config
 VOLUME /config
 
 EXPOSE 9090
+EXPOSE 9091
 
 #  default command 
 CMD ["/usr/bin/java", "-jar", "-Ddatabase.file=/config/home-services.odb", "/home-services.jar"]

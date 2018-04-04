@@ -55,7 +55,7 @@ public class DoorController {
             //return repository.findByHomeNameAndDoorNameAndEventDate(homeName, doorName, eventDate);
             return repository.findByEventDate(eventDate);
         } catch (ParseException e) {
-            LOG.error("Can't convert " + onDate + " to date.  Use format MM-dd-yyyy", e);
+            LOG.error(String.format("Can't convert %s to date.  Use format MM-dd-yyyy", onDate), e);
         }
         return Collections.EMPTY_LIST;
     }
@@ -63,7 +63,7 @@ public class DoorController {
     @RequestMapping(method = RequestMethod.GET, value = "/{doorName}/{id}")
     DoorEvent getDoorEvent(@PathVariable String doorName, @PathVariable String id) {
 
-        LOG.info("looking for door event " + Long.parseLong(id));
+        LOG.info(String.format("looking for door event %d", Long.parseLong(id)));
         return repository.findOne(Long.parseLong(id));
     }
 
@@ -74,7 +74,7 @@ public class DoorController {
 
         DoorEvent event = new DoorEvent(homeName, doorName, DoorEvent.Type.valueOf(type.toLowerCase()), new Date());
         repository.save(event);
-        LOG.info("Created " + event);
+        LOG.info(String.format("Created %s", event));
 
         return createResponse(doorName, homeName, event);
     }

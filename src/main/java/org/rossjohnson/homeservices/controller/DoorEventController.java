@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
@@ -45,6 +46,34 @@ public class DoorEventController {
         }
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/graphite")
+    public String dump() throws Exception {
+        List events = repository.findAll();
+        System.out.println("About to write " + events.size() + " records");
+        StringBuffer buf = new StringBuffer();
+        PrintWriter out = new PrintWriter("home-services-data.txt");
+        try {
+            for (Object e : events) {
+                buf.append(createMessage((DoorEvent) e)).append("\n");
+            }
+            out.write(buf.toString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            out.flush();
+            out.close();
+        }
+        return "Wrote " + events.size() + " records";
+    }
+
+    private String createMessage(DoorEvent de) {
+        return "door." + de.getHomeName() + "." + de.getDoorName() + " " +
+                (de.getType().equals(DoorEvent.Type.opened) ? "1" : "0") + " " +
+                de.getEventDate().getTime() / 1000;
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     DoorEvent getDoorEvent(@PathVariable String id) {
 
@@ -67,7 +96,7 @@ public class DoorEventController {
         DateParser dp = new DateParser();
         Date startDate = dp.parseDate(onDate);
         Date endDate = dp.getDayAfter(startDate);
-        LOG.info("Looking for door events between " + startDate + " and " + endDate);
+        LOG.info(String.format("Looking for door events between %s and %s", startDate, endDate));
 
         if (doorName == null || type == null) {
             if (doorName != null) {

@@ -26,11 +26,7 @@ public class PlexWebHookController {
 							HttpServletResponse response,
 							@RequestParam("files") MultipartFile[] files ) throws Exception {
 
-		String payloadString = request.getParameter("payload");
-
-		//System.out.println(payloadString);
-		PlexPayload payload = jacksonObjectMapper.readValue(payloadString, PlexPayload.class);
-		//System.out.println(payload.getPlayer().getTitle() + " - " + payload.getEvent());
+		PlexPayload payload = jacksonObjectMapper.readValue(request.getParameter("payload"), PlexPayload.class);
 
 		if ("media.play".equals(payload.getEvent())) {
 			if (payload.getPlayer().getTitle().contains("theater")) {

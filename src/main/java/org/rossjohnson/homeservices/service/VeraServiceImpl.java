@@ -1,4 +1,4 @@
-package org.rossjohnson.homeservices.vera;
+package org.rossjohnson.homeservices.service;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class VeraControllerImpl implements VeraController {
+public class VeraServiceImpl implements VeraService {
 
 	private static final String sceneURL =
 			"http://192.168.1.180:3480/data_request?" +

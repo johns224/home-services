@@ -6,7 +6,7 @@
 
     <groupId>org.rossjohnson</groupId>
     <artifactId>home-services</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -22,6 +22,11 @@
     </distributionManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+            <version>1.2.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -60,6 +65,11 @@
             <artifactId>httpclient</artifactId>
             <version>4.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>paho-mqtt</artifactId>
+            <version>1.1.0</version>
+        </dependency>
     </dependencies>
 
     <properties>
@@ -79,15 +89,7 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.2.3</version>
-<!--                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
--->
+
                 <configuration>
                     <imageName>johns224/${project.artifactId}</imageName>
                     <dockerDirectory>${project.basedir}</dockerDirectory>
@@ -125,6 +127,10 @@
             <id>objectdb</id>
             <name>ObjectDB Repository</name>
             <url>http://m2.objectdb.com</url>
+        </repository>
+        <repository>
+            <id>Eclipse Paho Repo</id>
+            <url>https://repo.eclipse.org/content/repositories/paho-releases/</url>
         </repository>
     </repositories>
 

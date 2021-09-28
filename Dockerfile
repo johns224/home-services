@@ -2,7 +2,7 @@
 FROM openjdk:8-jre-alpine 
 
 # copy application JAR (with libraries inside) 
-COPY target/home-services-1.1.jar /home-services.jar 
+COPY target/home-services-1.2.jar /home-services.jar
 
 RUN mkdir /config
 VOLUME /config

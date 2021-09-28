@@ -2,7 +2,8 @@ package org.rossjohnson.homeservices.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.rossjohnson.homeservices.model.PlexPayload;
-import org.rossjohnson.homeservices.vera.VeraController;
+import org.rossjohnson.homeservices.service.HomeAssistantService;
+import org.rossjohnson.homeservices.service.VeraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +20,10 @@ public class PlexWebHookController {
 	private ObjectMapper jacksonObjectMapper;
 
 	@Autowired
-	private VeraController veraController;
+	private VeraService veraService;
+
+	@Autowired
+	private HomeAssistantService haController;
 
 	@RequestMapping(path = "/webhook", method = RequestMethod.POST)
 	public void processHook(MultipartHttpServletRequest request,
@@ -31,7 +35,9 @@ public class PlexWebHookController {
 		if ("media.play".equals(payload.getEvent())) {
 			if (payload.getPlayer().getTitle().contains("theater")) {
 				System.out.println(new Date() + " - turning off lights in theater");
-				veraController.runScene("1");
+				//veraService.runScene("1");
+
+				haController.runVideoStartedScene();
 			}
 		}
 

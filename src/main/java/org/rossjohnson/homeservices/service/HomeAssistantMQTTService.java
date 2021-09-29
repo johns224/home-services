@@ -26,10 +26,7 @@ public class HomeAssistantMQTTService implements HomeAssistantService {
 	@Value("${mqtt.port}")
 	private int mqttPort;
 
-	private int mqttQos = 1;
-
 	public static final org.apache.commons.logging.Log LOG = LogFactory.getLog(HomeAssistantMQTTService.class);
-
 
 	@Override
 	public void runVideoStartedScene() {
@@ -42,7 +39,7 @@ public class HomeAssistantMQTTService implements HomeAssistantService {
 			options.setPassword(mqttPass.toCharArray());
 			client.connect(options);
 			MqttMessage message = new MqttMessage("Playing".getBytes());
-			message.setQos(mqttQos);
+			message.setQos(1);
 			LOG.info("Publishing '" + message.toString() + "' to " + broker + " on " + videoStartedTopic);
 			client.publish(videoStartedTopic, message);
 			client.disconnect();

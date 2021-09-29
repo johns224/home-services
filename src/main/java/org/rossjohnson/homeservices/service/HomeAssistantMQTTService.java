@@ -11,20 +11,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class HomeAssistantMQTTService implements HomeAssistantService {
-	@Value("${mqtt.topic.video.started:/theater/playing}")
-	private String videoStartedTopic = "/theater/playing";
+	@Value("${mqtt.topic.video.started}")
+	private String videoStartedTopic;
 
-	@Value("${mqtt.host:192.168.1.28}")
-	private String mqttHost = "192.168.1.28";
+	@Value("${mqtt.host}")
+	private String mqttHost;
 
-	@Value("${mqtt.user:mqtt-user")
-	private String mqttUser = "mqtt-user";
+	@Value("${mqtt.user")
+	private String mqttUser;
 
-	@Value("${mqtt.pass:mos97fink")
-	private String mqttPass = "mos97fink";
+	@Value("${mqtt.pass")
+	private String mqttPass;
 
-	@Value("${mqtt.port:1883}")
-	private int mqttPort = 1883;
+	@Value("${mqtt.port}")
+	private int mqttPort;
 
 	private int mqttQos = 1;
 

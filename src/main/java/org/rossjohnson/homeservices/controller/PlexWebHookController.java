@@ -40,7 +40,7 @@ public class PlexWebHookController {
 		if ("media.play".equals(payload.getEvent())) {
 			if (payload.getPlayer().getTitle().contains("theater")) {
 				LOG.info("Turning off lights in theater");
-				LOG.info("Is home assistant controller null? " + (haController == null));
+//				LOG.info("Is home assistant controller null? " + (haController == null));
 				//veraService.runScene("1");
 
 				haController.runVideoStartedScene();

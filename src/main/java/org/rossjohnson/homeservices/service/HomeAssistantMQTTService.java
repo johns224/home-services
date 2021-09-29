@@ -17,10 +17,10 @@ public class HomeAssistantMQTTService implements HomeAssistantService {
 	@Value("${mqtt.host}")
 	private String mqttHost;
 
-	@Value("${mqtt.user")
+	@Value("${mqtt.user}")
 	private String mqttUser;
 
-	@Value("${mqtt.pass")
+	@Value("${mqtt.pass}")
 	private String mqttPass;
 
 	@Value("${mqtt.port}")

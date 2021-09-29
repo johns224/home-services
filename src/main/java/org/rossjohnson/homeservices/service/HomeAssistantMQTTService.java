@@ -1,5 +1,6 @@
 package org.rossjohnson.homeservices.service;
 
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -27,10 +28,14 @@ public class HomeAssistantMQTTService implements HomeAssistantService {
 
 	private int mqttQos = 1;
 
+	public static final org.apache.commons.logging.Log LOG = LogFactory.getLog(HomeAssistantMQTTService.class);
+
+
 	@Override
 	public void runVideoStartedScene() {
 		try {
 			String broker = "tcp://" + mqttHost + ":" + mqttPort;
+			LOG.info("Using broker " + broker);
 			MqttClient client = new MqttClient(	broker, "homeServices", new MemoryPersistence());
 			MqttConnectOptions options = new MqttConnectOptions();
 			options.setUserName(mqttUser);
@@ -38,13 +43,12 @@ public class HomeAssistantMQTTService implements HomeAssistantService {
 			client.connect(options);
 			MqttMessage message = new MqttMessage("Playing".getBytes());
 			message.setQos(mqttQos);
-			System.out.println("Publishing '" + message.toString() + "' to " + broker + " on " + videoStartedTopic);
+			LOG.info("Publishing '" + message.toString() + "' to " + broker + " on " + videoStartedTopic);
 			client.publish(videoStartedTopic, message);
 			client.disconnect();
 
 		} catch (MqttException e) {
-			System.out.println(e);
-			e.printStackTrace();
+			LOG.info("Problem publishing to MQTT:\n", e);
 		}
 	}
 

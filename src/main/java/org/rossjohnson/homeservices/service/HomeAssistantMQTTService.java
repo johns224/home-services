@@ -43,12 +43,13 @@ public class HomeAssistantMQTTService implements HomeAssistantService {
 			client.connect(options);
 			MqttMessage message = new MqttMessage("Playing".getBytes());
 			message.setQos(mqttQos);
-			LOG.info("Publishing '" + message.toString() + "' to " + broker + " on " + videoStartedTopic);
+			LOG.info("Publishing '" + message.toString() + "' to " + broker + " on " + videoStartedTopic +
+					" using user/pass " + mqttUser + "/" + mqttPass);
 			client.publish(videoStartedTopic, message);
 			client.disconnect();
 
 		} catch (MqttException e) {
-			LOG.info("Problem publishing to MQTT:\n", e);
+			LOG.info("Problem publishing to MQTT:", e);
 		}
 	}
 

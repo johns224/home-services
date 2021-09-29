@@ -35,7 +35,7 @@ public class HomeAssistantMQTTService implements HomeAssistantService {
 	public void runVideoStartedScene() {
 		try {
 			String broker = "tcp://" + mqttHost + ":" + mqttPort;
-			LOG.info("Using broker " + broker);
+			LOG.info("Using broker " + broker + " with user/pass "  + mqttUser + "/" + mqttPass);
 			MqttClient client = new MqttClient(	broker, "homeServices", new MemoryPersistence());
 			MqttConnectOptions options = new MqttConnectOptions();
 			options.setUserName(mqttUser);
@@ -43,8 +43,7 @@ public class HomeAssistantMQTTService implements HomeAssistantService {
 			client.connect(options);
 			MqttMessage message = new MqttMessage("Playing".getBytes());
 			message.setQos(mqttQos);
-			LOG.info("Publishing '" + message.toString() + "' to " + broker + " on " + videoStartedTopic +
-					" using user/pass " + mqttUser + "/" + mqttPass);
+			LOG.info("Publishing '" + message.toString() + "' to " + broker + " on " + videoStartedTopic);
 			client.publish(videoStartedTopic, message);
 			client.disconnect();
 

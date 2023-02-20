@@ -1,4 +1,4 @@
 target/**/*
-!target/home-services-1.1.jar
+!target/home-services-1.2.jar
 .git/**/*
 .idea/**/*
